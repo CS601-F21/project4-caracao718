@@ -1,6 +1,5 @@
 package server;
 
-
 import com.google.gson.Gson;
 import event.CreateEventServlet;
 import event.EventsServlet;
@@ -8,17 +7,18 @@ import event.PurchaseTicketServlet;
 import event.TransferTicketServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import user.UserServlet;
 import utilities.Config;
 
 import java.io.FileReader;
 
 /**
- * A Web Application uses Jetty to implement multiple functionalities
+ * A Ticket Purchase Web Application uses Jetty to implement multiple functionalities
  */
 public class TicketServer {
 
     public static final int PORT = 8080;
-    private static final String configFilename = "";
+    private static final String configFilename = "config.json";
 
     public static void main(String[] args) {
         try {
@@ -50,6 +50,7 @@ public class TicketServer {
         // Once authenticated, Slack will redirect the user
         // back to /login
         // login page contains:
+        // "My account" button
         // "create event" button
         // "Events" button
         // "Purchase Tickets" button
@@ -57,13 +58,26 @@ public class TicketServer {
         // "Logout" button
         context.addServlet(LoginServlet.class, "/login");
 
+        // the /user path will direct to the user's account page with
+        // "My account" button on login page
+        // user page contains:
+        // user account information
+        // transactions
+        context.addServlet(UserServlet.class, "/user");
+
+
         // the /create path will direct to a create event page with
         // "Create an Event" button on login page
-        context.addServlet(CreateEventServlet.class, "/create");
+        context.addServlet(CreateEventServlet.class, "/create"); //create-event
 
         // the /events path will direct to a page that lists all the events with
         // "Events" button on login page
+        // ??? view each event
         context.addServlet(EventsServlet.class, "/events");
+
+        // the /events/
+        // context.addServlet(EventServlet.class, "/events/specific-event's-name");
+
 
         // the /purchase path will direct to a page that user can purchase tickets with
         // "Purchase Tickets" button on login page
