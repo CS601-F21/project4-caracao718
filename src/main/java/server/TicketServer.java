@@ -7,8 +7,9 @@ import event.PurchaseTicketServlet;
 import event.TransferTicketServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import user.ChangeNameServlet;
 import user.UserServlet;
-import utilities.Config;
+import utilities.ServerConfig;
 
 import java.io.FileReader;
 
@@ -31,17 +32,17 @@ public class TicketServer {
 
     public static void startup() throws Exception {
 
-        // read the client id and secret from a config file
+        // read the client id and secret from a serverConfig file
         Gson gson = new Gson();
-        Config config = gson.fromJson(new FileReader(configFilename), Config.class);
+        ServerConfig serverConfig = gson.fromJson(new FileReader(configFilename), ServerConfig.class);
 
         // create a new server
         Server server = new Server(PORT);
 
-        // make the config information available across servlets by setting an
+        // make the serverConfig information available across servlets by setting an
         // attribute in the context
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setAttribute(TicketServerConstants.CONFIG_KEY, config);
+        context.setAttribute(TicketServerConstants.CONFIG_KEY, serverConfig);
 
         // the default path will direct to a landing page with
         // "Login with Slack" button
@@ -64,6 +65,7 @@ public class TicketServer {
         // user account information
         // transactions
         context.addServlet(UserServlet.class, "/user");
+        context.addServlet(ChangeNameServlet.class, "/change-name");
 
 
         // the /create path will direct to a create event page with

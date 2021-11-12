@@ -5,12 +5,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
-import utilities.Config;
+import utilities.ServerConfig;
 import utilities.LoginUtilities;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Landing page that allows a user to request to login with Slack.
+ */
 public class LandingServlet extends HttpServlet {
 
     @Override
@@ -28,8 +31,8 @@ public class LandingServlet extends HttpServlet {
             return;
         }
 
-        // retrieve the config info from the context
-        Config config = (Config) req.getServletContext().getAttribute(TicketServerConstants.CONFIG_KEY);
+        // retrieve the serverConfig info from the context
+        ServerConfig serverConfig = (ServerConfig) req.getServletContext().getAttribute(TicketServerConstants.CONFIG_KEY);
 
         /** From the OpenID spec:
          * state
@@ -51,10 +54,10 @@ public class LandingServlet extends HttpServlet {
         String nonce = LoginUtilities.generateNonce(state);
 
         // Generate url for request to Slack
-        String url = LoginUtilities.generateSlackAuthorizeURL(config.getClient_id(),
+        String url = LoginUtilities.generateSlackAuthorizeURL(serverConfig.getClient_id(),
                 state,
                 nonce,
-                config.getRedirect_url());
+                serverConfig.getRedirect_url());
 
         resp.setStatus(HttpStatus.OK_200);
         PrintWriter writer = resp.getWriter();

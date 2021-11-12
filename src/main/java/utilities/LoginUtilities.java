@@ -118,7 +118,7 @@ public class LoginUtilities {
         }
 
         // retrieve and decode id_token
-        String idToken = (String)map.get("id_token");
+        String idToken = (String)map.get(TicketServerConstants.ID_TOKEN_KEY);
         Map<String, Object> payloadMap = decodeIdTokenPayload(idToken);
 
         //verify nonce
@@ -130,9 +130,15 @@ public class LoginUtilities {
 
         // extract name from response
         String username = (String) payloadMap.get(TicketServerConstants.NAME_KEY);
+        String accessToken = (String) payloadMap.get(TicketServerConstants.ACCESS_TOKEN_KEY);
+        String tokenType = (String) payloadMap.get(TicketServerConstants.TOKEN_TYPE_KEY);
+        boolean emailVeri = (boolean) payloadMap.get(TicketServerConstants.EMAIL_VERIFIED_KEY);
+        String email = null;
+        if (emailVeri) {
+            email = (String) payloadMap.get(TicketServerConstants.EMAIL_KEY);
+        }
 
-        // watch the class recoding and add more
-        return new UserInfo(username);
+        return new UserInfo(username, accessToken, tokenType, idToken, email);
     }
 
     /**

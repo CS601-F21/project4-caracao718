@@ -8,6 +8,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
+/**
+ * A class that provides static methods to send HTTP GET and POST requests.
+ */
 public class HTTPFetcher {
     /**
      * Execute an HTTP GET for the specified URL and return the

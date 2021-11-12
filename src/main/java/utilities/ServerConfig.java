@@ -1,6 +1,9 @@
 package utilities;
 
-public class Config {
+/**
+ * A class parse necessary configuration info.
+ */
+public class ServerConfig {
     // These variable names violate Java style guidelines
     // in order to be consistent with the naming conventions
     // in the Slack API
@@ -8,7 +11,7 @@ public class Config {
     private String client_id;
     private String client_secret;
 
-    public Config(String redirect_uri, String client_id, String client_secret) {
+    public ServerConfig(String redirect_uri, String client_id, String client_secret) {
         this.redirect_uri = redirect_uri;
         this.client_id = client_id;
         this.client_secret = client_secret;
