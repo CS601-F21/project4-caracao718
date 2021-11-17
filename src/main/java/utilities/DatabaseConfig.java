@@ -1,4 +1,4 @@
-package user;
+package utilities;
 
 /**
  * A class to store the properties of the JSON configuration file for database.

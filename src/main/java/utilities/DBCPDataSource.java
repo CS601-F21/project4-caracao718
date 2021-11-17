@@ -1,6 +1,8 @@
-package user;
+package utilities;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import utilities.DatabaseConfig;
+import utilities.DatabaseUtilities;
 
 import java.sql.Connection;
 import java.sql.SQLException;
