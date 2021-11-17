@@ -8,6 +8,7 @@ import event.TransferTicketServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import user.ChangeNameServlet;
+import user.UserInfo;
 import user.UserServlet;
 import utilities.ServerConfig;
 

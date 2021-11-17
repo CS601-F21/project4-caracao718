@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
+import user.CurrentUser;
 import user.DBCPDataSource;
 import user.JDBCUsers;
 import user.UserInfo;
@@ -55,7 +56,10 @@ public class LoginServlet extends HttpServlet {
         String responseString = HTTPFetcher.doGet(url, null);
         Map<String, Object> response = LoginUtilities.jsonStrToMap(responseString);
 
+//        UserInfo userInfo = LoginUtilities.verifyTokenResponse(response, sessionId);
         UserInfo userInfo = LoginUtilities.verifyTokenResponse(response, sessionId);
+        new CurrentUser(userInfo);
+
 
 
         if (userInfo == null) {

@@ -44,6 +44,19 @@ public class JDBCUsers {
     }
 
     /**
+     * A method that changes the name in table users
+     * @param con
+     * @param name
+     */
+    public static void changeName(Connection con, String name, String email) throws SQLException{
+        String changeName = "UPDATE users SET name=? WHERE email=?;";
+        PreparedStatement changeNameStmt = con.prepareStatement(changeName);
+        changeNameStmt.setString(1, name);
+        changeNameStmt.setString(2, email);
+        changeNameStmt.executeUpdate();
+    }
+
+    /**
      * A method to demonstrate using a PrepareStatement to execute a database select
      * @param con
      * @throws SQLException

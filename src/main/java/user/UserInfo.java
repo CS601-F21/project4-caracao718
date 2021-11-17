@@ -1,5 +1,8 @@
 package user;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  * A class to maintain info about each client.
  */
@@ -35,6 +38,10 @@ public class UserInfo {
      */
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAccessToken() {
