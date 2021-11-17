@@ -18,7 +18,8 @@ public class DBCPDataSource {
         if(config == null) {
             System.exit(1);
         }
-        ds.setUrl("jdbc:mysql://localhost:3306/" + config.getDatabase());
+//        ds.setUrl("jdbc:mysql://localhost:8081/" + config.getDatabase());
+        ds.setUrl("jdbc:mysql://127.0.0.1:8081/" + config.getDatabase());
         ds.setUsername(config.getUsername());
         ds.setPassword(config.getPassword());
         ds.setMinIdle(5);

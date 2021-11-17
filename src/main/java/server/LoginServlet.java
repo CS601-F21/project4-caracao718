@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
         UserInfo userInfo = LoginUtilities.verifyTokenResponse(response, sessionId);
 
 
-        if(userInfo == null) {
+        if (userInfo == null) {
             resp.setStatus(HttpStatus.OK_200);
             resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>Oops, login unsuccessful</h1>");
@@ -75,9 +75,17 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+    /**
+     * A method that updates the user database only if the user is not existed in the users table
+     * @param userInfo
+     */
     private void addToDatabase(UserInfo userInfo) {
+        // if the database already contains the user email, then return
+        // else create the user in the database
         try (Connection connection = DBCPDataSource.getConnection()){
-            JDBCUsers.executeInsert(connection, userInfo.getName(), userInfo.getEmail());
+            if (!JDBCUsers.checkUserExistence(connection, userInfo.getEmail())) {
+                JDBCUsers.executeInsert(connection, userInfo.getName(), userInfo.getEmail());
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         }

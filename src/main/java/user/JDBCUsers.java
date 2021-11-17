@@ -1,5 +1,7 @@
 package user;
 
+import utilities.JDBCConstants;
+
 import java.sql.*;
 
 /**
@@ -28,6 +30,17 @@ public class JDBCUsers {
         insertContactStmt.setString(1, name);
         insertContactStmt.setString(2, email);
         insertContactStmt.executeUpdate();
+    }
+
+    /**
+     * A method to check if a user is already in the database or not
+     */
+    public static boolean checkUserExistence(Connection con, String userEmail) throws SQLException {
+        String user = "SELECT EXISTS(SELECT * FROM users WHERE email=?);";
+        PreparedStatement checkUser = con.prepareStatement(user);
+        checkUser.setString(1, userEmail);
+        ResultSet results = checkUser.executeQuery();
+        return results.next();
     }
 
     /**
