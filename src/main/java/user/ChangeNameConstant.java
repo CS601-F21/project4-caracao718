@@ -17,8 +17,10 @@ public class ChangeNameConstant {
 
     public static final String GET_CHANGE_NAME_PAGE = PAGE_HEADER +
             "<form action=\"/change-name\" method=\"post\">\n" +
-            "  <label for=\"msg\">New Name:</label><br/>\n" +
-            "  <input type=\"text\" id=\"msg\" name=\"msg\"/><br/>\n" +
+            "  <label for=\"fname\">New First Name:</label><br/>\n" +
+            "  <input type=\"text\" id=\"fname\" name=\"fname\"/><br/>\n" +
+            "  <label for=\"lname\">New Last Name:</label><br/>\n" +
+            "  <input type=\"text\" id=\"lname\" name=\"lname\"/><br/>\n" +
             "  <input type=\"submit\" value=\"Submit\"/>\n" +
             "</form>\n" +
             PAGE_FOOTER;

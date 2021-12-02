@@ -11,16 +11,25 @@ public class JDBCUsers {
     /**
      * A method using a PreparedStatement to execute a database insert.
      * @param con
-     * @param name
      * @param email
      * @throws SQLException
      */
-    public static void executeInsert(Connection con, String name, String email, int eventID) throws SQLException {
-        String insertContactSql = "INSERT INTO users (name, email, event_id) VALUES (?, ?, ?);";
+    public static void executeInsertFirstnameEmail(Connection con, String firstName, String email) throws SQLException {
+        String insertContactSql = "INSERT INTO users (first_name, email) VALUES (?, ?);";
         PreparedStatement insertContactStmt = con.prepareStatement(insertContactSql);
-        insertContactStmt.setString(1, name);
+        insertContactStmt.setString(1, firstName);
         insertContactStmt.setString(2, email);
-        insertContactStmt.setInt(3, eventID);
+        insertContactStmt.executeUpdate();
+    }
+
+    public static void executeSignupInsert(Connection con, String username, String lastName, String location, String eventType, String email) throws SQLException {
+        String insertContactSql = "UPDATE users SET username=?, last_name=?, location=?, event_type=? WHERE email=?;";
+        PreparedStatement insertContactStmt = con.prepareStatement(insertContactSql);
+        insertContactStmt.setString(1, username);
+        insertContactStmt.setString(2, lastName);
+        insertContactStmt.setString(3, location);
+        insertContactStmt.setString(4, eventType);
+        insertContactStmt.setString(5, email);
         insertContactStmt.executeUpdate();
     }
 
@@ -40,16 +49,29 @@ public class JDBCUsers {
         PreparedStatement checkUser = con.prepareStatement(user);
         checkUser.setString(1, userEmail);
         ResultSet results = checkUser.executeQuery();
-        return results.next();
+        if (results.next()) {
+            return results.getInt(1) != 0;
+        }
+        return false;
     }
+
+
 
     /**
      * A method that changes the name in table users
      * @param con
      * @param name
      */
-    public static void changeName(Connection con, String name, String email) throws SQLException{
-        String changeName = "UPDATE users SET name=? WHERE email=?;";
+    public static void changeFirstName(Connection con, String name, String email) throws SQLException{
+        String changeName = "UPDATE users SET first_name=? WHERE email=?;";
+        PreparedStatement changeNameStmt = con.prepareStatement(changeName);
+        changeNameStmt.setString(1, name);
+        changeNameStmt.setString(2, email);
+        changeNameStmt.executeUpdate();
+    }
+
+    public static void changeLastName(Connection con, String name, String email) throws SQLException{
+        String changeName = "UPDATE users SET last_name=? WHERE email=?;";
         PreparedStatement changeNameStmt = con.prepareStatement(changeName);
         changeNameStmt.setString(1, name);
         changeNameStmt.setString(2, email);

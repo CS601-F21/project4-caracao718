@@ -1,13 +1,11 @@
 package user;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 /**
  * A class to maintain info about each client.
  */
 public class UserInfo {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String accessToken;
     private String tokenType;
     private String idToken;
@@ -22,10 +20,10 @@ public class UserInfo {
 
     /**
      * Constructor
-     * @param name
+     * @param firstName
      */
-    public UserInfo(String name, String accessToken, String tokenType, String idToken, String email) {
-        this.name = name;
+    public UserInfo(String firstName, String accessToken, String tokenType, String idToken, String email) {
+        this.firstName = firstName;
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.idToken = idToken;
@@ -36,12 +34,20 @@ public class UserInfo {
      * return name
      * @return
      */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAccessToken() {

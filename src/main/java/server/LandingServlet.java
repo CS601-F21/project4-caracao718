@@ -5,28 +5,49 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
+import utilities.DBCPDataSource;
 import utilities.ServerConfig;
 import utilities.LoginUtilities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Landing page that allows a user to request to login with Slack.
  */
 public class LandingServlet extends HttpServlet {
 
+    private static final Logger LOGGER = LogManager.getLogger(LandingServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
         String sessionId = req.getSession(true).getId();
+        LOGGER.info("sessionID: " +sessionId);
+
+        boolean sessionIDExists = false;
+        // put sessionID into the session table in DB
+        try {
+            Connection con = DBCPDataSource.getConnection();
+            if (!JDBCServer.ifSessionExists(con, sessionId)) {
+                JDBCServer.executeInsertSession(con, sessionId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // determine whether the user is already authenticated
         Object clientInfoObj = req.getSession().getAttribute(TicketServerConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
             resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
-            resp.getWriter().println("<h1>You have already been authenticated</h1>");
+            resp.getWriter().println("<h1>Something went wrong</h1>");
+            resp.getWriter().println("<p><a href=\"/logout\">Logout</a>");
             resp.getWriter().println(TicketServerConstants.PAGE_FOOTER);
             return;
         }
@@ -66,5 +87,19 @@ public class LandingServlet extends HttpServlet {
         writer.println("<a href=\""+url+"\"><img src=\"" + TicketServerConstants.SLACK_SIGN_IN_BUTTON_URL +"\"/></a>");
         writer.println(TicketServerConstants.PAGE_FOOTER);
 
+    }
+
+    /**
+     * Add the buttons for the functionalities of the web page
+     * @param resp
+     * @throws IOException
+     */
+    private void addButtons(HttpServletResponse resp) throws IOException {
+        resp.getWriter().println("<p><a href=\"/user\">My Account</a>");
+        resp.getWriter().println("<p><a href=\"/create\">Create Event</a>");
+        resp.getWriter().println("<p><a href=\"/events\">Events</a>");
+        resp.getWriter().println("<p><a href=\"/purchase\">Purchase Tickets</a>");
+        resp.getWriter().println("<p><a href=\"/transfer\">Transfer Tickets</a>");
+        resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
     }
 }

@@ -1,13 +1,11 @@
 package server;
 
 import com.google.gson.Gson;
-import event.CreateEventServlet;
-import event.EventsServlet;
-import event.PurchaseTicketServlet;
-import event.TransferTicketServlet;
+import event.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import user.ChangeNameServlet;
+import user.SignupServlet;
 import user.UserInfo;
 import user.UserServlet;
 import utilities.ServerConfig;
@@ -49,6 +47,11 @@ public class TicketServer {
         // "Login with Slack" button
         context.addServlet(LandingServlet.class, "/");
 
+        // the /signin path will direct first time users to the signup page
+        // after that, the user will be directed to the login page
+        // if the user is already in the database, redirct to /login page
+        context.addServlet(SignupServlet.class, "/signup");
+
         // Once authenticated, Slack will redirect the user
         // back to /login
         // login page contains:
@@ -65,7 +68,10 @@ public class TicketServer {
         // user page contains:
         // user account information
         // transactions
+        // change user info
+        // "logout" button
         context.addServlet(UserServlet.class, "/user");
+        context.addServlet(UserEventsDetailServlet.class, "/user-events");
         context.addServlet(ChangeNameServlet.class, "/change-name");
 
 

@@ -5,12 +5,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
+import server.JDBCServer;
 import server.TicketServerConstants;
+import utilities.DBCPDataSource;
 import utilities.ServerConfig;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -20,8 +21,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // retrieve the ID of this session
-        String sessionId = req.getSession(true).getId();
-
+        String sessionId = req.getSession(false).getId();
 
         // retrieve the serverConfig info from the context
         ServerConfig serverConfig = (ServerConfig) req.getServletContext().getAttribute(TicketServerConstants.CONFIG_KEY);
@@ -43,15 +43,28 @@ public class UserServlet extends HttpServlet {
 //            e.printStackTrace();
 //        }
 
+        String firstName = "";
+        try {
+            Connection con = DBCPDataSource.getConnection();
+            firstName = JDBCServer.getFirstNameGivenSession(con, sessionId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String email = "";
+        try {
+            Connection con = DBCPDataSource.getConnection();
+            email = JDBCServer.getEmailGivenSession(con, sessionId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //button to change name
         resp.setStatus(HttpStatus.OK_200);
         resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
-        resp.getWriter().println("<h1>Hello, " + CurrentUser.userInfo.getName() + "</h1>");
-
-        //button to change name
-        resp.getWriter().println("<h3>Your email is: " + CurrentUser.userInfo.getEmail() + "</h3>");
+        resp.getWriter().println("<h1>Hello, " + firstName + "</h1>");
+        resp.getWriter().println("<h3>Your email is: " + email + "</h3>");
         resp.getWriter().println("<p><a href=\"/change-name\">Change Name</a>");
         resp.getWriter().println("<p><a href=\"/login\">Back to Home Page</a>");
-
         resp.getWriter().println(TicketServerConstants.PAGE_FOOTER);
 
     }
