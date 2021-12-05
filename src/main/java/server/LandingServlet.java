@@ -45,6 +45,8 @@ public class LandingServlet extends HttpServlet {
         Object clientInfoObj = req.getSession().getAttribute(TicketServerConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
+            resp.setStatus(HttpStatus.OK_200);
+            resp.setHeader("Connection", "close");
             resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>Something went wrong</h1>");
             resp.getWriter().println("<p><a href=\"/logout\">Logout</a>");

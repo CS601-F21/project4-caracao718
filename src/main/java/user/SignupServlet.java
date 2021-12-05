@@ -31,6 +31,8 @@ public class SignupServlet extends HttpServlet {
         Object clientInfoObj = req.getSession().getAttribute(TicketServerConstants.CLIENT_INFO_KEY);
         if(clientInfoObj != null) {
             // already authed, no need to log in
+            resp.setStatus(HttpStatus.OK_200);
+            resp.setHeader("Connection", "close");
             resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>You have already been authenticated</h1>");
             resp.getWriter().println("<p><a href=\"/login\">Main Page</a>");
@@ -66,6 +68,7 @@ public class SignupServlet extends HttpServlet {
 
         if (userInfo == null) {
             resp.setStatus(HttpStatus.OK_200);
+            resp.setHeader("Connection", "close");
             resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
             resp.getWriter().println("<h1>Oops, authentication unsuccessful</h1>");
             resp.getWriter().println(TicketServerConstants.PAGE_FOOTER);
@@ -84,6 +87,7 @@ public class SignupServlet extends HttpServlet {
         }
         if (exists) {
             resp.setStatus(HttpStatus.OK_200);
+            resp.setHeader("Connection", "close");
             resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
             resp.getWriter().println("You have already signed up, please click below to your home page~");
             resp.getWriter().println("<p><a href=\"/login\">My Home Page</a>");
@@ -99,6 +103,7 @@ public class SignupServlet extends HttpServlet {
             e.printStackTrace();
         }
         resp.setStatus(HttpStatus.OK_200);
+        resp.setHeader("Connection", "close");
         resp.getWriter().println(SignupConstant.SIGN_UP_PAGE);
     }
 

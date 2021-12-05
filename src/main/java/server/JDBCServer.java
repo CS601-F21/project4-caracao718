@@ -50,6 +50,28 @@ public class JDBCServer {
         return null;
     }
 
+    public static String getLastNameGivenSession(Connection con, String sessionID) throws SQLException {
+        String selectLastName = "SELECT last_name FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
+        PreparedStatement selectLastNameStmt = con.prepareStatement(selectLastName);
+        selectLastNameStmt.setString(1, sessionID);
+        ResultSet results = selectLastNameStmt.executeQuery();
+        if (results.next()) {
+            return results.getString("last_name");
+        }
+        return null;
+    }
+
+    public static String getUsernameGivenSession(Connection con, String sessionID) throws SQLException {
+        String selectUsername = "SELECT username FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
+        PreparedStatement selectUsernameStmt = con.prepareStatement(selectUsername);
+        selectUsernameStmt.setString(1, sessionID);
+        ResultSet results = selectUsernameStmt.executeQuery();
+        if (results.next()) {
+            return results.getString("username");
+        }
+        return null;
+    }
+
     public static String getEmailGivenSession(Connection con, String sessionID) throws SQLException {
         String selectEmail = "SELECT email FROM sessions WHERE session_id=?;";
         PreparedStatement selectEmailStmt = con.prepareStatement(selectEmail);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class JDBCEvent {
 
-    public static String getSelectTitleGivenEventId(Connection con, int eventId) throws SQLException {
+    public static String getTitleGivenEventId(Connection con, int eventId) throws SQLException {
         String selectAllTitles = "SELECT title FROM events WHERE id=?;";
         PreparedStatement selectAllTitlesStmt = con.prepareStatement(selectAllTitles);
         selectAllTitlesStmt.setInt(1, eventId);

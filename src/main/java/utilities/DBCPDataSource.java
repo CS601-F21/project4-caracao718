@@ -24,8 +24,9 @@ public class DBCPDataSource {
         ds.setUrl("jdbc:mysql://127.0.0.1:8081/" + config.getDatabase());
         ds.setUsername(config.getUsername());
         ds.setPassword(config.getPassword());
-        ds.setMinIdle(5);
-        ds.setMaxIdle(10);
+//        ds.setMinIdle(50);
+//        ds.setMaxIdle(100);
+        ds.setMaxTotal(100);
     }
 
     /**
@@ -33,8 +34,17 @@ public class DBCPDataSource {
      * @return
      * @throws SQLException
      */
+//    public static Connection getConnection() throws SQLException {
+//        return ds.getConnection();
+//    }
+
     public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
+        Connection connection = ds.getConnection();
+        return connection;
+    }
+
+    public static void release() throws SQLException {
+        ds.close();
     }
 
     private DBCPDataSource(){ }

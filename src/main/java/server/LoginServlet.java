@@ -6,19 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
-import user.CurrentUser;
 import utilities.DBCPDataSource;
-import user.JDBCUsers;
-import user.UserInfo;
-import utilities.ServerConfig;
-import utilities.HTTPFetcher;
-import utilities.LoginUtilities;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Implements logic for the /login path
@@ -42,7 +35,8 @@ public class LoginServlet extends HttpServlet {
         ArrayList<String> titles = new ArrayList<>();
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(TicketServerConstants.PAGE_HEADER);
+        resp.setHeader("Connection", "close");
+        resp.getWriter().println(LoginServletConstant.PAGE_HEADER);
         resp.getWriter().println("<h1>Hello, " + firstName + "</h1>");
         resp.getWriter().println("<h2> Here are the events you have coming up </h2>");
         // display all the events
@@ -50,7 +44,7 @@ public class LoginServlet extends HttpServlet {
             Connection con = DBCPDataSource.getConnection();
             eventIds = JDBCEvent.getEventIdsGivenSession(con, sessionId);
             for (int id : eventIds) {
-                titles.add(JDBCEvent.getSelectTitleGivenEventId(con, id));
+                titles.add(JDBCEvent.getTitleGivenEventId(con, id));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,24 +56,10 @@ public class LoginServlet extends HttpServlet {
         resp.getWriter().println("<p><a href=\"/user-events\">event details</a>");
         resp.getWriter().println("<h2> What can I do for you? </h2>");
         addButtons(resp);
-        resp.getWriter().println(TicketServerConstants.PAGE_FOOTER);
-    }
+        resp.getWriter().println(LoginServletConstant.PAGE_FOOTER);
 
-    /**
-     * A method that updates the user database only if the user is not existed in the users table
-     * @param userInfo
-     */
-    private void addToDatabase(UserInfo userInfo) {
-        // if the database already contains the user email, then return
-        // else create the user in the database
-        try {
-            Connection connection = DBCPDataSource.getConnection();
-            if (!JDBCUsers.checkUserExistence(connection, userInfo.getEmail())) {
-                JDBCUsers.executeInsert(connection, userInfo.getFirstName(), userInfo.getEmail());
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+//        resp.getWriter().close();
+//        resp.flushBuffer();
     }
 
     /**
