@@ -72,6 +72,17 @@ public class JDBCServer {
         return null;
     }
 
+    public static int getUserIdGivenSession(Connection con, String sessionID) throws SQLException {
+        String selectUserId = "SELECT user_id FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
+        PreparedStatement selectUserIdStmt = con.prepareStatement(selectUserId);
+        selectUserIdStmt.setString(1, sessionID);
+        ResultSet results = selectUserIdStmt.executeQuery();
+        if (results.next()) {
+            return results.getInt("user_id");
+        }
+        return -1;
+    }
+
     public static String getEmailGivenSession(Connection con, String sessionID) throws SQLException {
         String selectEmail = "SELECT email FROM sessions WHERE session_id=?;";
         PreparedStatement selectEmailStmt = con.prepareStatement(selectEmail);

@@ -34,13 +34,8 @@ public class DBCPDataSource {
      * @return
      * @throws SQLException
      */
-//    public static Connection getConnection() throws SQLException {
-//        return ds.getConnection();
-//    }
-
     public static Connection getConnection() throws SQLException {
-        Connection connection = ds.getConnection();
-        return connection;
+        return ds.getConnection();
     }
 
     public static void release() throws SQLException {

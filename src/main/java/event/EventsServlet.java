@@ -9,6 +9,8 @@ import utilities.DBCPDataSource;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,15 +20,15 @@ public class EventsServlet extends HttpServlet {
         // retrieve the ID of this session
         String sessionId = req.getSession(false).getId();
 
-        ArrayList<Integer> eventIds;
-        ArrayList<String> titles = new ArrayList<>();
+        ResultSet events = null;
+
+        // get current date in sql format
+        long millis = System.currentTimeMillis();
+        Date currDate = new Date(millis);
 
         try {
             Connection con = DBCPDataSource.getConnection();
-            eventIds = JDBCEvent.getEventIdsGivenSession(con, sessionId);
-            for (int id : eventIds) {
-                titles.add(JDBCEvent.getTitleGivenEventId(con, id));
-            }
+            events = JDBCEvent.getAllEvents(con, currDate);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,10 +37,15 @@ public class EventsServlet extends HttpServlet {
         resp.setStatus(HttpStatus.OK_200);
         resp.setHeader("Connection", "close");
         resp.getWriter().println(EventServletConstant.PAGE_HEADER);
-
-        for (String title : titles) {
-            resp.getWriter().print("<h3> " + title + " </h3>");
-
+        resp.getWriter().println("<h1> Here are all the events that are available. </h1>");
+        try {
+            while (events.next()) {
+                resp.getWriter().print("<h3> " + events.getString("title") + " </h3>");
+                resp.getWriter().println("<p><a href=\"/event-detail?event_id=" + events.getInt("id") + "\">details</a>");
+                resp.getWriter().println();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         resp.getWriter().println("<p><a href=\"/login\">Back to Home Page</a>");
         resp.getWriter().println(EventServletConstant.PAGE_FOOTER);

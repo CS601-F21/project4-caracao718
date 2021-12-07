@@ -83,6 +83,7 @@ public class TicketServer {
         // "Events" button on login page
         // ??? view each event
         context.addServlet(EventsServlet.class, "/events");
+        context.addServlet(EventsDetailServlet.class, "/event-detail");
 
         // the /events/
         // context.addServlet(EventServlet.class, "/events/specific-event's-name");

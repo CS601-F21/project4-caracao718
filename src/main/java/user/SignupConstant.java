@@ -26,8 +26,15 @@ public class SignupConstant {
             "  <label for=\"lname\">LastName:</label><br/>\n" +
             "  <input type=\"text\" id=\"lname\" name=\"lname\" required/><br/>\n" +
 
-            "  <label for=\"location\">Your location (City):</label><br/>\n" +
-            "  <input type=\"text\" id=\"location\" name=\"location\" required/><br/>\n" +
+            "  <label for=\"location\"> Your Location:</label><br/>\n" +
+            "  <select id=\"location\" name=\"location\"/><br/>\n" +
+                "  <option value=\"New York City\"> New York City</option>\n" +
+                "  <option value=\"San Francisco\"> San Francisco</option>\n" +
+                "  <option value=\"Los Angeles\"> Los Angeles</option>\n" +
+                "  <option value=\"Boston\"> Boston</option>\n" +
+                "  <option value=\"Seattle\"> Seattle</option>\n" +
+                "  <option value=\"San Diego\"> San Diego</option>\n" +
+            "</select>" +
 
             "   <input type=\"radio\" id=\"concert\" name=\"event_type\" value=\"concert\">\n" +
             "   <label for=\"concert\">Concert</label><br/>\n" +
