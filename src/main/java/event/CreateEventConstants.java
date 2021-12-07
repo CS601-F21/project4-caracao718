@@ -53,12 +53,27 @@ public class CreateEventConstants {
                 "  <option value=\"San Diego\"> San Diego</option>\n" +
             "</select>" +
 
-            "  <label for=\"event_image\" \n>You can choose to upload an image about the event:</label><br/>\n" +
-            "  <input type=\"file\" id=\"event_image\" name=\"event_image\"/><br/>\n" +
-//            "  <input type=\"submit\"/><br/>\n" +
+//            "  <label for=\"event_image\" \n>You can choose to upload an image about the event:</label><br/>\n" +
+//            "  <input type=\"file\" id=\"event_image\" name=\"event_image\"/><br/>\n" +
 
             "   \n  " +
             "  <input type=\"submit\" value=\"Submit\"/>\n" +
             "</form>\n" +
             PAGE_FOOTER;
+
+
+    public static final String PURCHASE_TICKET_BUTTON_FIRST_HALF = "<form action=\"/purchase\" method=\"post\">\n" +
+
+            "  <label for=\"number\">Number of Tickets to buy:</label><br/>\n" +
+            "  <select id=\"number\" name=\"number\"/><br/>\n" +
+            "  <option value=1> 1</option>\n" +
+            "  <option value=2> 2</option>\n" +
+            "  <option value=3> 3</option>\n" +
+            "  <option value=4> 4</option>\n" +
+            "  <option value=5> 5</option>\n" +
+            "  <option value=6> 6</option>\n" +
+            "</select>" +
+
+            "  <input type=\"submit\" value=\"Purchase\"/>\n";
+
 }

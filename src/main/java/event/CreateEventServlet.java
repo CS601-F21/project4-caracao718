@@ -46,25 +46,27 @@ public class CreateEventServlet extends HttpServlet {
         String location = req.getParameter("location");
 //        String image = req.getParameter("event_image");
 
-        Part imagePart = req.getPart("event_image");
-        InputStream inputStream = imagePart.getInputStream();
+//        Part imagePart = req.getPart("event_image");
+//        InputStream inputStream = imagePart.getInputStream();
 
         // add the input to DB
         try {
             Connection con = DBCPDataSource.getConnection();
             int userId = JDBCServer.getUserIdGivenSession(con, sessionId);
 
-            if (inputStream != null) {
-                JDBCEvent.executeInsertEventWithImage(con, userId, title, description, startDate, numOfTickets, price, location, inputStream);
-            } else {
-                JDBCEvent.executeInsertEvent(con, userId, title, description, startDate, numOfTickets, price, location);
-            }
+//            if (inputStream != null) {
+//                JDBCEvent.executeInsertEventWithImage(con, userId, title, description, startDate, numOfTickets, price, location, inputStream);
+//            } else {
+//                JDBCEvent.executeInsertEvent(con, userId, title, description, startDate, numOfTickets, price, location);
+//            }
+            JDBCEvent.executeInsertEvent(con, userId, title, description, startDate, numOfTickets, price, location);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            assert inputStream != null;
-            inputStream.close();
         }
+//        finally {
+//            assert inputStream != null;
+//            inputStream.close();
+//        }
         // print a line saying successfully created
         resp.setStatus(HttpStatus.OK_200);
         resp.getWriter().println(EventServletConstant.PAGE_HEADER);

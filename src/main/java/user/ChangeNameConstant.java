@@ -26,5 +26,7 @@ public class ChangeNameConstant {
 
             "  <input type=\"submit\" value=\"Submit\"/>\n" +
             "</form>\n" +
+
+            "   <p><a href=\"/user\">Don't want to change, GO BACK.</a>" +
             PAGE_FOOTER;
 }

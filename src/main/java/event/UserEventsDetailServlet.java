@@ -64,6 +64,7 @@ public class UserEventsDetailServlet extends HttpServlet {
                             e.printStackTrace();
                         }
                         resp.getWriter().println("<h3> Number of Tickets Purchased: " + numTickets + " </h3>");
+                        resp.getWriter().println("<p><a href=\"/transfer?event_id=" + event.getInt("id") + "\">Transfer Ticket(s)</a>");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -72,6 +73,7 @@ public class UserEventsDetailServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        resp.getWriter().println();
         resp.getWriter().println("<p><a href=\"/login\">My Home Page</a>");
         resp.getWriter().println(EventServletConstant.PAGE_FOOTER);
     }

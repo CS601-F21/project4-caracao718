@@ -1,5 +1,6 @@
 package user;
 
+import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import utilities.JDBCConstants;
 
 import java.sql.*;
@@ -55,6 +56,19 @@ public class JDBCUsers {
         return false;
     }
 
+    /**
+     * A method to retrieve user_id from users table given email
+     */
+    public static int getUserIdGivenEmail(Connection con, String email) throws SQLException {
+        String getEmail = "SELECT user_id FROM users WHERE email=?;";
+        PreparedStatement getEmailStmt = con.prepareStatement(getEmail);
+        getEmailStmt.setString(1, email);
+        ResultSet result = getEmailStmt.executeQuery();
+        if (result.next()) {
+            return result.getInt("user_id");
+        }
+        return -1;
+    }
 
 
     /**

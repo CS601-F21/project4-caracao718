@@ -53,7 +53,12 @@ public class LoginServlet extends HttpServlet {
         for (String title : titles) {
             resp.getWriter().println("<h3> " + title + " </h3>");
         }
-        resp.getWriter().println("<p><a href=\"/user-events\">event details</a>");
+        if (!titles.isEmpty()) {
+            resp.getWriter().println("<p><a href=\"/user-events\">event details</a>");
+        } else {
+            resp.getWriter().println("<p> You don't have any events coming up, please check out the EVENTS page! </p>");
+        }
+
         resp.getWriter().println("<h2> What can I do for you? </h2>");
         addButtons(resp);
         resp.getWriter().println(LoginServletConstant.PAGE_FOOTER);
@@ -71,8 +76,8 @@ public class LoginServlet extends HttpServlet {
         resp.getWriter().println("<p><a href=\"/user\">My Account</a>");
         resp.getWriter().println("<p><a href=\"/create\">Create Event</a>");
         resp.getWriter().println("<p><a href=\"/events\">Events</a>");
-        resp.getWriter().println("<p><a href=\"/purchase\">Purchase Tickets</a>");
-        resp.getWriter().println("<p><a href=\"/transfer\">Transfer Tickets</a>");
+//        resp.getWriter().println("<p><a href=\"/purchase\">Purchase Tickets</a>");
+//        resp.getWriter().println("<p><a href=\"/transfer\">Transfer Tickets</a>");
         resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
     }
 

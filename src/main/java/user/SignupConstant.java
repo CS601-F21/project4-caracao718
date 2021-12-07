@@ -34,7 +34,7 @@ public class SignupConstant {
                 "  <option value=\"Boston\"> Boston</option>\n" +
                 "  <option value=\"Seattle\"> Seattle</option>\n" +
                 "  <option value=\"San Diego\"> San Diego</option>\n" +
-            "</select>" +
+            "</select>\n" +
 
             "   <input type=\"radio\" id=\"concert\" name=\"event_type\" value=\"concert\">\n" +
             "   <label for=\"concert\">Concert</label><br/>\n" +
