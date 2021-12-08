@@ -97,6 +97,11 @@ public class TicketServer {
         // "Transfer Tickets" button on login page
         context.addServlet(TransferTicketServlet.class, "/transfer");
 
+        // modify an event the user created
+        context.addServlet(ModifyEventServlet.class, "/modify");
+        context.addServlet(ModifyDetailEventServlet.class, "/my-detail-event");
+        context.addServlet(DeleteEventServlet.class, "/delete-event");
+
         // handle logout
         context.addServlet(LogoutServlet.class, "/logout");
 

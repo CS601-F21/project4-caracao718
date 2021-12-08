@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
         resp.getWriter().println("<p><a href=\"/user\">My Account</a>");
         resp.getWriter().println("<p><a href=\"/create\">Create Event</a>");
         resp.getWriter().println("<p><a href=\"/events\">Events</a>");
-//        resp.getWriter().println("<p><a href=\"/purchase\">Purchase Tickets</a>");
+        resp.getWriter().println("<p><a href=\"/modify\">Modify events created by me</a>");
 //        resp.getWriter().println("<p><a href=\"/transfer\">Transfer Tickets</a>");
         resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
     }

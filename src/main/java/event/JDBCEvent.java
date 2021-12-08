@@ -31,6 +31,32 @@ public class JDBCEvent {
         insertEventStmt.executeUpdate();
     }
 
+    /**
+     * A method that updates one event in the events table
+     * @param con
+     * @param eventId
+     * @param title
+     * @param description
+     * @param eventDate
+     * @param numOfTickets
+     * @param price
+     * @param location
+     * @throws SQLException
+     */
+    public static void updateEvent(Connection con, int eventId, int availableTickets, String title, String description, Date eventDate, int numOfTickets, double price, String location) throws SQLException {
+        String updateEventSql = "UPDATE events SET title=?, description=?, event_date=?, tickets_avaiable=?, total_tickets=?, price=?, location=? WHERE id=?;";
+        PreparedStatement updateEventStmt = con.prepareStatement(updateEventSql);
+        updateEventStmt.setString(1, title);
+        updateEventStmt.setString(2, description);
+        updateEventStmt.setDate(3, eventDate);
+        updateEventStmt.setInt(4, availableTickets);
+        updateEventStmt.setInt(5, numOfTickets);
+        updateEventStmt.setDouble(6, price);
+        updateEventStmt.setString(7, location);
+        updateEventStmt.setInt(8, eventId);
+        updateEventStmt.executeUpdate();
+    }
+
 
     /**
      * A method to insert a new event into the events table with image
@@ -98,9 +124,30 @@ public class JDBCEvent {
         PreparedStatement selectAllEventsStmt = con.prepareStatement(selectAllEvents);
         selectAllEventsStmt.setInt(1, eventId);
         return selectAllEventsStmt.executeQuery();
-
     }
 
+    /**
+     * Get all events that a user created from events table
+     * @param con
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
+    public static ResultSet getEventGivenUserId(Connection con, int userId) throws SQLException {
+        String selectEvents = "SELECT * FROM events WHERE creator_id=?;";
+        PreparedStatement selectEventsStmt = con.prepareStatement(selectEvents);
+        selectEventsStmt.setInt(1, userId);
+        return selectEventsStmt.executeQuery();
+    }
+
+    /**
+     * Retrieve the number of tickets for a event that a user have
+     * @param con
+     * @param eventId
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
     public static int getNumTicketsGivenEventId(Connection con, int eventId, int userId) throws SQLException {
         String selectNumTicket = "SELECT ticket_num FROM user_to_event WHERE event_id=? AND user_id=?;";
         PreparedStatement selectNumTicketStmt = con.prepareStatement(selectNumTicket);
@@ -109,6 +156,42 @@ public class JDBCEvent {
         ResultSet results = selectNumTicketStmt.executeQuery();
         if (results.next()) {
             return results.getInt("ticket_num");
+        }
+        return -1;
+    }
+
+    /**
+     * Return the current available ticket for an event
+     * @param con
+     * @param eventId
+     * @return
+     * @throws SQLException
+     */
+    public static int getAvailableTicketsGivenEventId(Connection con, int eventId) throws SQLException {
+        String selectNumTicket = "SELECT tickets_avaiable FROM events WHERE id=?;";
+        PreparedStatement selectNumTicketStmt = con.prepareStatement(selectNumTicket);
+        selectNumTicketStmt.setInt(1, eventId);
+        ResultSet results = selectNumTicketStmt.executeQuery();
+        if (results.next()) {
+            return results.getInt("tickets_avaiable");
+        }
+        return -1;
+    }
+
+    /**
+     * Return the total tickets for an event
+     * @param con
+     * @param eventId
+     * @return
+     * @throws SQLException
+     */
+    public static int getTotalTicketsGivenEventId(Connection con, int eventId) throws SQLException {
+        String selectNumTicket = "SELECT total_tickets FROM events WHERE id=?;";
+        PreparedStatement selectNumTicketStmt = con.prepareStatement(selectNumTicket);
+        selectNumTicketStmt.setInt(1, eventId);
+        ResultSet results = selectNumTicketStmt.executeQuery();
+        if (results.next()) {
+            return results.getInt("total_tickets");
         }
         return -1;
     }
@@ -209,6 +292,26 @@ public class JDBCEvent {
         PreparedStatement deleteRowStmt = con.prepareStatement(deleteRow);
         deleteRowStmt.setInt(1, userId);
         deleteRowStmt.setInt(2, eventId);
+        deleteRowStmt.executeUpdate();
+    }
+
+    /**
+     * Delete the event in the events table given event_id
+     */
+    public static void deleteEventInEvents(Connection con, int eventId) throws SQLException {
+        String deleteRow = "DELETE FROM events WHERE id=?;";
+        PreparedStatement deleteRowStmt = con.prepareStatement(deleteRow);
+        deleteRowStmt.setInt(1, eventId);
+        deleteRowStmt.executeUpdate();
+    }
+
+    /**
+     * Delete all rows with event_id in table user_to_event
+     */
+    public static void deleteEventInUserToEvent(Connection con, int eventId) throws SQLException {
+        String deleteRow = "DELETE FROM user_to_event WHERE event_id=?;";
+        PreparedStatement deleteRowStmt = con.prepareStatement(deleteRow);
+        deleteRowStmt.setInt(1, eventId);
         deleteRowStmt.executeUpdate();
     }
 }

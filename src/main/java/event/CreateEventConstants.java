@@ -62,7 +62,7 @@ public class CreateEventConstants {
             PAGE_FOOTER;
 
 
-    public static final String PURCHASE_TICKET_BUTTON_FIRST_HALF = "<form action=\"/purchase\" method=\"post\">\n" +
+    public static final String MODIFY_EVENT_FORM = "<form action=\"/my-detai\" method=\"post\">\n" +
 
             "  <label for=\"number\">Number of Tickets to buy:</label><br/>\n" +
             "  <select id=\"number\" name=\"number\"/><br/>\n" +
