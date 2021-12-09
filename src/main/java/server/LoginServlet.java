@@ -75,7 +75,7 @@ public class LoginServlet extends HttpServlet {
     private void addButtons(HttpServletResponse resp) throws IOException {
         resp.getWriter().println("<p><a href=\"/user\">My Account</a>");
         resp.getWriter().println("<p><a href=\"/create\">Create Event</a>");
-        resp.getWriter().println("<p><a href=\"/events\">Events</a>");
+        resp.getWriter().println("<p><a href=\"/events?page=0&total=1\">Events</a>");
         resp.getWriter().println("<p><a href=\"/modify\">Modify events created by me</a>");
 //        resp.getWriter().println("<p><a href=\"/transfer\">Transfer Tickets</a>");
         resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");

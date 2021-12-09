@@ -119,6 +119,22 @@ public class JDBCEvent {
         return selectAllEventsStmt.executeQuery();
     }
 
+    /**
+     * Retrieve limited events to display on one page
+     * @param con
+     * @param currDate
+     * @param offset
+     * @return
+     * @throws SQLException
+     */
+    public static ResultSet getLimitEvents(Connection con, Date currDate, int offset) throws SQLException {
+        String selectLimitEvents = "SELECT * FROM events WHERE event_date>? LIMIT 5 OFFSET ?;";
+        PreparedStatement selectLimitEventsStmt = con.prepareStatement(selectLimitEvents);
+        selectLimitEventsStmt.setDate(1, currDate);
+        selectLimitEventsStmt.setInt(2, offset);
+        return selectLimitEventsStmt.executeQuery();
+    }
+
     public static ResultSet getEventGivenEventId(Connection con, int eventId) throws SQLException {
         String selectAllEvents = "SELECT * FROM events WHERE id=?;";
         PreparedStatement selectAllEventsStmt = con.prepareStatement(selectAllEvents);
