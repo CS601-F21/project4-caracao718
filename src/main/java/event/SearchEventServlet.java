@@ -27,45 +27,6 @@ public class SearchEventServlet extends HttpServlet {
         resp.setStatus(HttpStatus.OK_200);
         resp.getWriter().println(CreateEventConstants.SEARCH_EVENT_FORM);
 
-
-//        String title = req.getParameter("title");
-//        System.out.println(title);
-//        String description = req.getParameter("description");
-//        System.out.println(description);
-//        Date date = Date.valueOf(req.getParameter("date"));
-//        System.out.println(date);
-//        String location = req.getParameter("location");
-//        System.out.println(location);
-//
-//
-//        int totalNumberOfEvents = searchAll(title, description, date, location);
-//        int totalPageNumber = (int)Math.ceil(totalNumberOfEvents / eventsPerPage);
-//        ResultSet pageResults = searchPage(title, description, date, location, currPage * eventsPerPage);
-//
-//        // if there's any pageResults in the ResultSet, display them
-//        try {
-//            while (pageResults.next()) {
-//                resp.getWriter().print("<h3> " + pageResults.getString("title") + " </h3>");
-//                resp.getWriter().println("<p>Description: " + pageResults.getString("description") + "</p>");
-//                resp.getWriter().println("<p> Event Date and Time: " + pageResults.getDate("event_date") + " </p>");
-//                resp.getWriter().print("<h3> Event Location: " + pageResults.getString("location") + " </h3>");
-//                resp.getWriter().println("<p><a href=\"/event-detail?event_id=" + pageResults.getInt("id") + "\">details</a>");
-//                resp.getWriter().println();
-//            }
-//            pageResults.beforeFirst();
-//
-//            if (pageResults.next()) {
-//                int displayNumber = currPage + 1;
-//                resp.getWriter().println("<h5>This is page " + displayNumber + "</h5>");
-//                if (currPage < totalPageNumber) {
-//                    resp.getWriter().println();
-//                    resp.getWriter().println("<p><a href=\"/events?page=" + ++currPage + "&total=" + totalPageNumber + "\">Next Page</a>");
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        resp.getWriter().println("<p><a href=\"/login\">My Home Page</a>");
         resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
     }
 
@@ -108,6 +69,8 @@ public class SearchEventServlet extends HttpServlet {
                     resp.getWriter().println();
                     resp.getWriter().print("<p><a href=\"/display-search?page=" + ++currPage + "&title=" + title + "&description=" + description + "&date=" + date + "&location=" + location + "\">Next Page</a>\n");
                 }
+            } else {
+                resp.getWriter().println("<h5>No Results</h5>");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,37 +93,9 @@ public class SearchEventServlet extends HttpServlet {
         int result = 0;
         try {
             Connection con = DBCPDataSource.getConnection();
-            if (!title.isEmpty() && description.isEmpty() && date == null && Objects.equals(location, "empty")) {
-                // only search for title
-                resultSet = JDBCSearchIndividual.getAllEventsGivenTitle(con, title);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
-            } else if (title.isEmpty() && !description.isEmpty() && date == null && Objects.equals(location, "empty")) {
-                // only search for description
-                resultSet = JDBCSearchIndividual.getAllEventsGivenDescription(con, description);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
-            } else if (title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
+            if  (title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // only search for date
                 resultSet = JDBCSearchIndividual.getAllEventsGivenDate(con, date);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
-            } else if (title.isEmpty() && description.isEmpty() && date == null && !Objects.equals(location, "empty")) {
-                // only search for location
-                resultSet = JDBCSearchIndividual.getAllEventsGivenLocation(con, location);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
-            } else if (!title.isEmpty() && !description.isEmpty() && date == null && Objects.equals(location, "empty")) {
-                // search for title and description
-                resultSet = JDBCSearchMulti.getAllEventsGivenTitleDescription(con, title, description);
                 while (resultSet.next()) {
                     result++;
                 }
@@ -193,6 +128,24 @@ public class SearchEventServlet extends HttpServlet {
                     result++;
                 }
                 return result;
+            } else if (!title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
+                // search for title and date
+                resultSet = JDBCSearchMulti.getAllEventsGivenTitleDate(con, title, date);
+                while (resultSet.next()) {
+                    result++;
+                }
+                return result;
+            } else if (title.isEmpty() && !description.isEmpty() && date != null && Objects.equals(location, "empty")) {
+                // search for description and date
+                resultSet = JDBCSearchMulti.getAllEventsGivenDescriptionDate(con, description, date);
+                while (resultSet.next()) {
+                    result++;
+                }
+            } else if (!title.isEmpty() && description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
+                resultSet = JDBCSearchMulti.getAllEventsGivenTitleLocationDate(con, title, location, date);
+                while (resultSet.next()) {
+                    result++;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -212,21 +165,9 @@ public class SearchEventServlet extends HttpServlet {
     private ResultSet searchPage(String title, String description, Date date, String location, int page) {
         try {
             Connection con = DBCPDataSource.getConnection();
-            if (!title.isEmpty() && description.isEmpty() && date == null && Objects.equals(location, "empty")) {
-                // only search for title
-                return JDBCSearchIndividual.getLimitEventsGivenTitle(con, title, page);
-            } else if (title.isEmpty() && !description.isEmpty() && date == null && Objects.equals(location, "empty")) {
-                // only search for description
-                return JDBCSearchIndividual.getLimitEventsGivenDescription(con, description, page);
-            } else if (title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
+            if (title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // only search for date
                 return JDBCSearchIndividual.getLimitEventsGivenDate(con, date, page);
-            } else if (title.isEmpty() && description.isEmpty() && date == null && !Objects.equals(location, "empty")) {
-                // only search for location
-                return JDBCSearchIndividual.getLimitEventsGivenLocation(con, location, page);
-            } else if (!title.isEmpty() && !description.isEmpty() && date == null && Objects.equals(location, "empty")) {
-                // search for title and description
-                return JDBCSearchMulti.getLimitEventsGivenTitleDescription(con, title, description, page);
             } else if (!title.isEmpty() && !description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // search for title, description, and date
                 return JDBCSearchMulti.getLimitEventsGivenTitleDescriptionDate(con, title, description, date, page);
@@ -239,6 +180,15 @@ public class SearchEventServlet extends HttpServlet {
             } else if (title.isEmpty() && description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
                 // search for date, location
                 return JDBCSearchMulti.getLimitEventsGivenDateLocation(con, date, location, page);
+            } else if (!title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
+                // title and date
+                return JDBCSearchMulti.getLimitEventsGivenDateTitle(con, date, title, page);
+            } else if (title.isEmpty() && !description.isEmpty() && date != null && Objects.equals(location, "empty")) {
+                // description and date
+                return JDBCSearchMulti.getLimitEventsGivenDateDescription(con, date, description, page);
+            } else if (!title.isEmpty() && description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
+                // title location, and date
+                return JDBCSearchMulti.getLimitEventsGivenTitleLocationDate(con, title, location, date, page);
             }
         } catch (SQLException e) {
             e.printStackTrace();
