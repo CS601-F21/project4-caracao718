@@ -53,8 +53,6 @@ public class CreateEventConstants {
                 "  <option value=\"San Diego\"> San Diego</option>\n" +
             "</select>" +
 
-//            "  <label for=\"event_image\" \n>You can choose to upload an image about the event:</label><br/>\n" +
-//            "  <input type=\"file\" id=\"event_image\" name=\"event_image\"/><br/>\n" +
 
             "   \n  " +
             "  <input type=\"submit\" value=\"Submit\"/>\n" +
@@ -62,18 +60,36 @@ public class CreateEventConstants {
             PAGE_FOOTER;
 
 
-    public static final String MODIFY_EVENT_FORM = "<form action=\"/my-detai\" method=\"post\">\n" +
+    public static final String SEARCH_EVENT_FORM = PAGE_HEADER +
+            "<h2> Please fill out all the information in the form below to search an event.</h2>\n" +
 
-            "  <label for=\"number\">Number of Tickets to buy:</label><br/>\n" +
-            "  <select id=\"number\" name=\"number\"/><br/>\n" +
-            "  <option value=1> 1</option>\n" +
-            "  <option value=2> 2</option>\n" +
-            "  <option value=3> 3</option>\n" +
-            "  <option value=4> 4</option>\n" +
-            "  <option value=5> 5</option>\n" +
-            "  <option value=6> 6</option>\n" +
+            "<form action=\"/search?page=0\" method=\"post\">\n" +
+
+            "  <label for=\"title\">Event Title:</label><br/>\n" +
+            "  <input type=\"text\" id=\"title\" name=\"title\"/><br/>\n" +
+
+            "  <p> Please input keywords of the description: </p>\n" +
+            "  <textarea name=\"description\" rows=\"10\" cols=\"30\"></textarea><br/>\n" +
+
+            "  <label for=\"date\">Must select Earliest Date:</label><br/>\n" +
+            "  <input type=\"date\" id=\"date\" name=\"date\" min=" + currDate + " required/><br/>\n" +
+
+
+            "  <label for=\"location\">Location:</label><br/>\n" +
+            "  <select id=\"location\" name=\"location\"/><br/>\n" +
+            "  <option value=\"New York City\"> New York City</option>\n" +
+            "  <option value=\"San Francisco\"> San Francisco</option>\n" +
+            "  <option value=\"Los Angeles\"> Los Angeles</option>\n" +
+            "  <option value=\"Boston\"> Boston</option>\n" +
+            "  <option value=\"Seattle\"> Seattle</option>\n" +
+            "  <option value=\"San Diego\"> San Diego</option>\n" +
+            "  <option value=\"empty\" selected> no location</option>\n" +
             "</select>" +
 
-            "  <input type=\"submit\" value=\"Purchase\"/>\n";
+
+            "   \n  " +
+            "  <input type=\"submit\" value=\"Submit\"/>\n" +
+            "</form>\n";
+
 
 }

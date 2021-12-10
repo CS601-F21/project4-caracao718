@@ -42,25 +42,6 @@ public class EventsDetailServlet extends HttpServlet {
                 resp.getWriter().print("<h3> Tickets available: " + event.getInt("tickets_avaiable") + " </h3>");
                 resp.getWriter().print("<h3> Price per ticket: " + event.getDouble("price") + " </h3>");
 
-                // display image
-//                if (event.getString("event_image") != null) {
-//                    // display the image
-//                    resp.getWriter().print(event.getBlob("event_image"));
-//                }
-
-
-//                String imgLength = event.getString("event_image");
-//                int length = imgLength.length();
-//                byte[] image = new byte[length];
-//                InputStream inputStream1 = event.getBinaryStream("event_image");
-//                int index = inputStream1.read(image, 0, length);
-//                System.out.println("index"+index);
-//                inputStream1.close();
-//                resp.reset();
-//                resp.setContentType("image/jpg");
-//                resp.getOutputStream().write(image, 0, length);
-//                resp.getOutputStream().flush();
-
             }
 
 

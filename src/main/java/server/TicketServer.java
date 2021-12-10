@@ -102,6 +102,10 @@ public class TicketServer {
         context.addServlet(ModifyDetailEventServlet.class, "/my-detail-event");
         context.addServlet(DeleteEventServlet.class, "/delete-event");
 
+        // search events by location, title, and description
+        context.addServlet(SearchEventServlet.class, "/search");
+        context.addServlet(DisplaySearchServlet.class, "/display-search");
+
         // handle logout
         context.addServlet(LogoutServlet.class, "/logout");
 

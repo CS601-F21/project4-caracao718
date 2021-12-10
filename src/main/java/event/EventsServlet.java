@@ -26,7 +26,6 @@ public class EventsServlet extends HttpServlet {
         // retrieve the ID of this session
         String sessionId = req.getSession(false).getId();
         String[] requestURI = req.getQueryString().split("\\p{Punct}", 4);
-        System.out.println(Arrays.toString(requestURI));
         // first page number default is 0
         int pageNumber = Integer.parseInt(requestURI[1]);
         int total = Integer.parseInt(requestURI[3]);
