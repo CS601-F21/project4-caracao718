@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * A servlet class that displays 5 events per page
@@ -25,6 +26,14 @@ public class EventsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String[] requestURI = req.getQueryString().split("\\p{Punct}", 4);
+
+        // verify query
+        if (!Objects.equals(requestURI[0], "page") || !Objects.equals(requestURI[2], "total") || requestURI.length != 4) {
+            resp.setStatus(HttpStatus.BAD_REQUEST_400);
+            resp.getWriter().println(EventConstants.ERROR_PAGE);
+            return;
+        }
+
         // first page number default is 0
         int pageNumber = Integer.parseInt(requestURI[1]);
         int total = Integer.parseInt(requestURI[3]);

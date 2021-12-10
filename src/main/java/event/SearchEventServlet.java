@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -31,15 +33,22 @@ public class SearchEventServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String sessionId = req.getSession(false).getId();
-        String[] requestURI = req.getQueryString().split("\\p{Punct}", 10);
+        String[] requestURI = req.getQueryString().split("=|&", 10);
+
+        // verify query
+        if (!Objects.equals(requestURI[0], "page")) {
+            resp.setStatus(HttpStatus.BAD_REQUEST_400);
+            resp.getWriter().println(EventConstants.ERROR_PAGE);
+            return;
+        }
+
         int currPage = Integer.parseInt(requestURI[1]);
 
         String title = req.getParameter("title");
         String description = req.getParameter("description");
-        Date date = Date.valueOf(req.getParameter("date"));
+        String dateString = req.getParameter("date");
+        Date date = Date.valueOf(dateString); // converting string into sql date
         String location = req.getParameter("location");
-
 
 
         int totalNumberOfEvents = searchAll(title, description, date, location);
