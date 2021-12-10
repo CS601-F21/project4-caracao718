@@ -73,7 +73,7 @@ public class PurchaseTicketServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
+        resp.getWriter().println("<p><a href=\"/events?page=0&total=1\">Back to Events</a>");
         resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
@@ -123,7 +123,7 @@ public class PurchaseTicketServlet extends HttpServlet {
         resp.setStatus(HttpStatus.OK_200);
         resp.getWriter().println(EventConstants.PAGE_HEADER);
         resp.getWriter().println("<h2> Purchase successful </h2>");
-        resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
+        resp.getWriter().println("<p><a href=\"/events?page=0&total=1\">Back to Events</a>");
         resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 }

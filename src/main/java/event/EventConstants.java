@@ -22,6 +22,10 @@ public class EventConstants {
             "</body>\n" +
             "</html>";
 
+    public static final String ERROR_PAGE = PAGE_HEADER +
+            "<h2> Bad request, please try again.</h2>\n" +
+            "<p><a href=\"/login\">My Home Page</a></p>" +
+            PAGE_FOOTER;
 
     public static final String GET_CREATE_EVENT_PAGE = PAGE_HEADER +
             "<h2> Please fill out all the information in the form below to create an event.</h2>\n" +

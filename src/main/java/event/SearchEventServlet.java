@@ -25,7 +25,7 @@ public class SearchEventServlet extends HttpServlet {
 
         resp.setStatus(HttpStatus.OK_200);
         resp.getWriter().println(EventConstants.SEARCH_EVENT_FORM);
-
+        resp.getWriter().println("<p><a href=\"/login\">My Home Page</a>");
         resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 

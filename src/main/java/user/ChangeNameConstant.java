@@ -22,10 +22,10 @@ public class ChangeNameConstant {
             "<form action=\"/change-name\" method=\"post\">\n" +
 
             "  <label for=\"fname\">New First Name:</label><br/>\n" +
-            "  <input type=\"text\" id=\"fname\" name=\"fname\"/><br/>\n" +
+            "  <input type=\"text\" id=\"fname\" name=\"fname\" required/><br/>\n" +
 
             "  <label for=\"lname\">New Last Name:</label><br/>\n" +
-            "  <input type=\"text\" id=\"lname\" name=\"lname\"/><br/>\n" +
+            "  <input type=\"text\" id=\"lname\" name=\"lname\" required/><br/>\n" +
 
             "  <input type=\"submit\" value=\"Submit\"/>\n" +
             "</form>\n" +

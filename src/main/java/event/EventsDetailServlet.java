@@ -50,7 +50,7 @@ public class EventsDetailServlet extends HttpServlet {
         // link to purchase ticket servlet
         resp.getWriter().println("<p><a href=\"/purchase?event_id=" + eventId + "\">Buy Ticket(s)</a>");
         resp.getWriter().println();
-        resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
+        resp.getWriter().println("<p><a href=\"/events?page=0&total=1\">Back to Events</a>");
         resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 

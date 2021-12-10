@@ -90,17 +90,4 @@ public class LandingServlet extends HttpServlet {
 
     }
 
-    /**
-     * Add the buttons for the functionalities of the web page
-     * @param resp
-     * @throws IOException
-     */
-    private void addButtons(HttpServletResponse resp) throws IOException {
-        resp.getWriter().println("<p><a href=\"/user\">My Account</a>");
-        resp.getWriter().println("<p><a href=\"/create\">Create Event</a>");
-        resp.getWriter().println("<p><a href=\"/events\">Events</a>");
-        resp.getWriter().println("<p><a href=\"/purchase\">Purchase Tickets</a>");
-        resp.getWriter().println("<p><a href=\"/transfer\">Transfer Tickets</a>");
-        resp.getWriter().println("<p><a href=\"/logout\">Signout</a>");
-    }
 }

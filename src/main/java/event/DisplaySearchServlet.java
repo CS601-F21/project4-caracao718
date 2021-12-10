@@ -24,7 +24,14 @@ public class DisplaySearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String[] requestURI = req.getQueryString().split("=|&", 10);
-        System.out.println(Arrays.toString(requestURI));
+
+        // verify query
+        if (!Objects.equals(requestURI[0], "page")) {
+            resp.setStatus(HttpStatus.BAD_REQUEST_400);
+            resp.getWriter().println(EventConstants.ERROR_PAGE);
+            return;
+        }
+
         int currPage = Integer.parseInt(requestURI[1]);
 
         String title = requestURI[3];
