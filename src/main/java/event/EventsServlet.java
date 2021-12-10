@@ -23,8 +23,7 @@ public class EventsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // retrieve the ID of this session
-        String sessionId = req.getSession(false).getId();
+
         String[] requestURI = req.getQueryString().split("\\p{Punct}", 4);
         // first page number default is 0
         int pageNumber = Integer.parseInt(requestURI[1]);

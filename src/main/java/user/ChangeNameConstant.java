@@ -1,5 +1,8 @@
 package user;
 
+/**
+ * A helper class to maintain constants used for Change Name Servlet
+ */
 public class ChangeNameConstant {
 
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +

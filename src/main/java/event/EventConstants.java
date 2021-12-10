@@ -2,7 +2,10 @@ package event;
 
 import java.sql.Date;
 
-public class CreateEventConstants {
+/**
+ * A helper class to maintain constants used for the Event Servlets
+ */
+public class EventConstants {
     private static long millis = System.currentTimeMillis();
     private static Date date = new Date(millis);
     private static String currDate = date.toString();
@@ -27,9 +30,6 @@ public class CreateEventConstants {
 
             "  <label for=\"title\">Event Title:</label><br/>\n" +
             "  <input type=\"text\" id=\"title\" name=\"title\" required/><br/>\n" +
-
-//            "  <label for=\"description\">Event Description:</label><br/>\n" +
-//            "  <input type=\"text\" id=\"description\" name=\"description\" required/><br/>\n" +
 
             "  <p> Please input description of event: </p>\n" +
             "  <textarea name=\"description\" rows=\"10\" cols=\"30\"></textarea><br/>\n" +

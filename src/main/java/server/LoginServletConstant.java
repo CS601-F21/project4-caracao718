@@ -1,5 +1,8 @@
 package server;
 
+/**
+ * A helper class to maintain constants used for the Login Servlet
+ */
 public class LoginServletConstant {
 
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +

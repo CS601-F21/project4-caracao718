@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Handle requests to /delete-event
+ * delete event in database
+ */
 public class DeleteEventServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,9 +34,9 @@ public class DeleteEventServlet extends HttpServlet {
         }
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         resp.getWriter().println("<h2> Event successfully deleted. </h2>");
         resp.getWriter().println("<p><a href=\"/login\">Back to Home Page</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 }

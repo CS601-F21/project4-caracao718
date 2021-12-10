@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Handles a request to sign out
+ * Handles a request to /logout
  */
 public class LogoutServlet extends HttpServlet {
     @Override

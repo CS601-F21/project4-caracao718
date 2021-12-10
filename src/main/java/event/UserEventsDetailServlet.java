@@ -6,8 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
 import server.JDBCServer;
-import server.TicketServerConstants;
-import user.JDBCUsers;
+
 import utilities.DBCPDataSource;
 
 import java.io.IOException;
@@ -16,6 +15,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Handle requests to /user-events
+ * Display user's up coming events
+ */
 public class UserEventsDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

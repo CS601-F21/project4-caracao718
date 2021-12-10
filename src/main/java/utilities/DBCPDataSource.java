@@ -1,12 +1,14 @@
 package utilities;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import utilities.DatabaseConfig;
-import utilities.DatabaseUtilities;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * A class to create connection with the database
+ */
 public class DBCPDataSource {
     // Apache commons connection pool implementation
     private static BasicDataSource ds = new BasicDataSource();
@@ -20,7 +22,6 @@ public class DBCPDataSource {
         if(config == null) {
             System.exit(1);
         }
-//        ds.setUrl("jdbc:mysql://localhost:8081/" + config.getDatabase());
         ds.setUrl("jdbc:mysql://127.0.0.1:8081/" + config.getDatabase());
         ds.setUsername(config.getUsername());
         ds.setPassword(config.getPassword());
@@ -36,10 +37,6 @@ public class DBCPDataSource {
      */
     public static Connection getConnection() throws SQLException {
         return ds.getConnection();
-    }
-
-    public static void release() throws SQLException {
-        ds.close();
     }
 
     private DBCPDataSource(){ }

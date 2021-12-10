@@ -30,7 +30,6 @@ public class LandingServlet extends HttpServlet {
         String sessionId = req.getSession(true).getId();
         LOGGER.info("sessionID: " +sessionId);
 
-        boolean sessionIDExists = false;
         // put sessionID into the session table in DB
         try {
             Connection con = DBCPDataSource.getConnection();

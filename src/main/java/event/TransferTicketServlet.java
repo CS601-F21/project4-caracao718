@@ -5,17 +5,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
-import org.eclipse.jetty.util.IO;
 import server.JDBCServer;
 import user.JDBCUsers;
 import utilities.DBCPDataSource;
 
-import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Handle requests to /transfer
+ * To transfer tickets to an existing user in the database
+ */
 public class TransferTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +39,7 @@ public class TransferTicketServlet extends HttpServlet {
 
         // display information about the event
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         try {
             if (event.next()) {
                 resp.getWriter().print("<h2> " + event.getString("title") + " </h2>");
@@ -46,7 +48,6 @@ public class TransferTicketServlet extends HttpServlet {
                 resp.getWriter().println("<h3> Number of ticket(s) you have: " + ticketsAvailable + " </h3>");
                 // let user enter username of the account he/she want to transfer to
                 // enter the number of tickets
-                //return
                 resp.getWriter().print("<form action=\"/transfer?event_id=" + eventId + "\" method=\"post\">\n" +
 
                         "  <label for=\"number\">Number of Tickets to transfer:</label><br/>\n" +
@@ -73,7 +74,7 @@ public class TransferTicketServlet extends HttpServlet {
 
         resp.getWriter().println();
         resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
     @Override
@@ -95,10 +96,10 @@ public class TransferTicketServlet extends HttpServlet {
                 userIdTrans = JDBCUsers.getUserIdGivenEmail(con, email);
             } else {
                 resp.setStatus(HttpStatus.BAD_REQUEST_400);
-                resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+                resp.getWriter().println(EventConstants.PAGE_HEADER);
                 resp.getWriter().println("<h2> The email you entered cannot be matched to a user in our database, please try a different email address. </h2>");
                 resp.getWriter().println("<p><a href=\"/transfer?event_id=" + eventId + "\">Back</a>");
-                resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+                resp.getWriter().println(EventConstants.PAGE_FOOTER);
                 return;
             }
             // in user_to_event table
@@ -121,10 +122,10 @@ public class TransferTicketServlet extends HttpServlet {
             e.printStackTrace();
         }
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         resp.getWriter().println("<h2> Transfer Successful. </h2>");
         resp.getWriter().println("<p><a href=\"/login\">Back to Home Page</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
 
 
     }

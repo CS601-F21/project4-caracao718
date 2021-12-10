@@ -15,6 +15,10 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Handle requests to /display-search
+ * To display 5 events per page
+ */
 public class DisplaySearchServlet extends HttpServlet {
     private int eventsPerPage = 5;
     @Override
@@ -34,7 +38,7 @@ public class DisplaySearchServlet extends HttpServlet {
         ResultSet pageResults = searchPage(title, description, date, location, currPage * eventsPerPage);
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         // if there's any pageResults in the ResultSet, display them
         boolean displayPageNumber = false;
         try {
@@ -61,7 +65,7 @@ public class DisplaySearchServlet extends HttpServlet {
         }
         resp.getWriter().println("<p><a href=\"/search\">Another Search</a>");
         resp.getWriter().println("<p><a href=\"/login\">My Home Page</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
     /**

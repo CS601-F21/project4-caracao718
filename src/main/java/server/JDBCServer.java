@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * A class that connect to MySQL database using JDBC
+ */
 public class JDBCServer {
 
     /**
@@ -20,6 +23,13 @@ public class JDBCServer {
         insertContactStmt.executeUpdate();
     }
 
+    /**
+     * execute insert user to database given session id and email
+     * @param con
+     * @param sessionID
+     * @param email
+     * @throws SQLException
+     */
     public static void executeInsertSession(Connection con, String sessionID, String email) throws SQLException {
         String insertContactSql = "UPDATE sessions SET email=? WHERE session_id=?;";
         PreparedStatement insertContactStmt = con.prepareStatement(insertContactSql);
@@ -28,6 +38,13 @@ public class JDBCServer {
         insertContactStmt.executeUpdate();
     }
 
+    /**
+     * check if current session exists
+     * @param con
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public static boolean ifSessionExists(Connection con, String sessionID) throws SQLException {
         String checkExistSession = "SELECT EXISTS(SELECT * FROM sessions WHERE session_id=?);";
         PreparedStatement checkExistSessionStmt = con.prepareStatement(checkExistSession);
@@ -39,6 +56,13 @@ public class JDBCServer {
         return false;
     }
 
+    /**
+     * Retrieve first name given session id
+     * @param con
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public static String getFirstNameGivenSession(Connection con, String sessionID) throws SQLException {
         String selectFirstName = "SELECT first_name FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
         PreparedStatement selectFirstNameStmt = con.prepareStatement(selectFirstName);
@@ -50,6 +74,13 @@ public class JDBCServer {
         return null;
     }
 
+    /**
+     * Retrieve last name given session id
+     * @param con
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public static String getLastNameGivenSession(Connection con, String sessionID) throws SQLException {
         String selectLastName = "SELECT last_name FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
         PreparedStatement selectLastNameStmt = con.prepareStatement(selectLastName);
@@ -61,6 +92,13 @@ public class JDBCServer {
         return null;
     }
 
+    /**
+     * Retrieve username given session id
+     * @param con
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public static String getUsernameGivenSession(Connection con, String sessionID) throws SQLException {
         String selectUsername = "SELECT username FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
         PreparedStatement selectUsernameStmt = con.prepareStatement(selectUsername);
@@ -72,6 +110,13 @@ public class JDBCServer {
         return null;
     }
 
+    /**
+     * Retrieve user id given session id
+     * @param con
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public static int getUserIdGivenSession(Connection con, String sessionID) throws SQLException {
         String selectUserId = "SELECT user_id FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?);";
         PreparedStatement selectUserIdStmt = con.prepareStatement(selectUserId);
@@ -83,6 +128,13 @@ public class JDBCServer {
         return -1;
     }
 
+    /**
+     * Retrieve email address given session id
+     * @param con
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public static String getEmailGivenSession(Connection con, String sessionID) throws SQLException {
         String selectEmail = "SELECT email FROM sessions WHERE session_id=?;";
         PreparedStatement selectEmailStmt = con.prepareStatement(selectEmail);
@@ -94,6 +146,12 @@ public class JDBCServer {
         return null;
     }
 
+    /**
+     * Delete session id row
+     * @param con
+     * @param sessionID
+     * @throws SQLException
+     */
     public static void deleteSession(Connection con, String sessionID) throws SQLException {
         String deleteSession = "DELETE FROM sessions WHERE session_id=?;";
         PreparedStatement deleteSessionStmt = con.prepareStatement(deleteSession);

@@ -24,7 +24,6 @@ public class TicketServerConstants {
     public static final String RESPONSE_TYPE_VALUE= "code";
     public static final String CODE_KEY= "code";
 
-    //what is the scope value
     public static final String SCOPE_KEY = "scope";
     public static final String SCOPE_VALUE = "openid%20profile%20email";
 

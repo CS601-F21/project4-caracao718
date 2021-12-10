@@ -12,11 +12,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Handle requests to /change-name
+ */
 public class ChangeNameServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(ChangeNameServlet.class);
 

@@ -1,7 +1,8 @@
 package user;
 
-import javax.swing.text.html.CSS;
-
+/**
+ * A helper class to maintain constants used for the Signup Servlet
+ */
 public class SignupConstant {
 
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +

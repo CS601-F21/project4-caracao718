@@ -13,6 +13,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Handle requests to /modify
+ * To choose to modify or delete a event created by user
+ */
 public class ModifyEventServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

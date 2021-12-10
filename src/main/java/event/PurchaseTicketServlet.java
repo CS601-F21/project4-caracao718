@@ -10,15 +10,16 @@ import utilities.DBCPDataSource;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
+/**
+ * Handle requests to /purchase
+ * To purchase event tickets
+ */
 public class PurchaseTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String sessionId = req.getSession(false).getId();
 
         String[] requestURI = req.getQueryString().split("=", 2);
         int eventId = Integer.parseInt(requestURI[1]);
@@ -36,7 +37,7 @@ public class PurchaseTicketServlet extends HttpServlet {
         int ticketsAvailable;
         // display information about the event
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         try {
             if (event.next()) {
                 resp.getWriter().print("<h2> " + event.getString("title") + " </h2>");
@@ -46,7 +47,7 @@ public class PurchaseTicketServlet extends HttpServlet {
                 if (ticketsAvailable <= 0) {
                     resp.getWriter().println("<h2> Sorry, no more tickets </h2>");
                     resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
-                    resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+                    resp.getWriter().println(EventConstants.PAGE_FOOTER);
                     return;
                 }
                 resp.getWriter().print("<h3> Tickets available: " + ticketsAvailable + " </h3>");
@@ -73,7 +74,7 @@ public class PurchaseTicketServlet extends HttpServlet {
         }
 
         resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
     @Override
@@ -120,9 +121,9 @@ public class PurchaseTicketServlet extends HttpServlet {
         }
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         resp.getWriter().println("<h2> Purchase successful </h2>");
         resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 }

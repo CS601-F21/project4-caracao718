@@ -1,5 +1,8 @@
 package event;
 
+/**
+ * A helper class to maintain constants for Event Servlet
+ */
 public class EventServletConstant {
     public static final String PAGE_HEADER = "<!DOCTYPE html>\n" +
             "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +

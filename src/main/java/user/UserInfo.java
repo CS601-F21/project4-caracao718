@@ -2,6 +2,7 @@ package user;
 
 /**
  * A class to maintain info about each client.
+ * Create only in the signup Servlet, before storing user information into the DB
  */
 public class UserInfo {
     private String firstName;

@@ -19,6 +19,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Handle requests to /signup
+ * For first time users to create an account
+ */
 public class SignupServlet extends HttpServlet {
     private Logger LOGGER = LogManager.getLogger(SignupServlet.class);;
 
@@ -116,7 +120,6 @@ public class SignupServlet extends HttpServlet {
         String location = req.getParameter("location");
         String eventType = req.getParameter("event_type");
 
-        // input user information into DB
         try {
             Connection con = DBCPDataSource.getConnection();
             String email = JDBCServer.getEmailGivenSession(con, sessionId);

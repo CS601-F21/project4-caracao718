@@ -2,6 +2,10 @@ package event;
 
 import java.sql.*;
 
+/**
+ * A class that contains SQL queries to connect to a MySQL database using JDBC
+ * SQL queries for Search Servlet given a single parameter
+ */
 public class JDBCSearchIndividual {
 
     /**

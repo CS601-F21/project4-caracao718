@@ -4,6 +4,10 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * A class that contains SQL queries to connect to a MySQL database using JDBC
+ * SQL queries for Event Servlet
+ */
 public class JDBCEvent {
     /**
      * A method to insert new event in the events table
@@ -59,42 +63,6 @@ public class JDBCEvent {
 
 
     /**
-     * A method to insert a new event into the events table with image
-     * @param con
-     * @param userId
-     * @param title
-     * @param description
-     * @param eventDate
-     * @param numOfTickets
-     * @param price
-     * @param location
-     * @param image
-     * @throws SQLException
-     */
-    public static void executeInsertEventWithImage(Connection con, int userId, String title, String description, Date eventDate, int numOfTickets, double price, String location, InputStream image) throws SQLException {
-        String insertEventSql = "INSERT INTO events (title, description, event_date, tickets_avaiable, total_tickets, price, location, creator_id, event_image) VALUES (?,?,?,?,?,?,?,?,?);";
-        PreparedStatement insertEventStmt = con.prepareStatement(insertEventSql);
-        insertEventStmt.setString(1, title);
-        insertEventStmt.setString(2, description);
-        insertEventStmt.setDate(3, eventDate);
-        insertEventStmt.setInt(4, numOfTickets);
-        insertEventStmt.setInt(5, numOfTickets);
-        insertEventStmt.setDouble(6, price);
-        insertEventStmt.setString(7, location);
-        insertEventStmt.setInt(8, userId);
-        insertEventStmt.setBlob(9, image);
-        insertEventStmt.executeUpdate();
-    }
-
-    public static void executeInsertImage(Connection con, String image, String title) throws SQLException {
-        String insertImageSql = "UPDATE events SET event_image=? WHERE title=?;";
-        PreparedStatement insertImageStmt = con.prepareStatement(insertImageSql);
-        insertImageStmt.setString(1, image);
-        insertImageStmt.setString(2, title);
-        insertImageStmt.executeUpdate();
-    }
-
-    /**
      * A method to retrieve the event title in the events table, given the eventId
      * @param con
      * @param eventId
@@ -112,6 +80,13 @@ public class JDBCEvent {
         return "";
     }
 
+    /**
+     * Retrieve all events after current day
+     * @param con
+     * @param currDate
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet getAllEvents(Connection con, Date currDate) throws SQLException {
         String selectAllEvents = "SELECT * FROM events WHERE event_date>?;";
         PreparedStatement selectAllEventsStmt = con.prepareStatement(selectAllEvents);
@@ -135,6 +110,13 @@ public class JDBCEvent {
         return selectLimitEventsStmt.executeQuery();
     }
 
+    /**
+     * Retrieve event given event id
+     * @param con
+     * @param eventId
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet getEventGivenEventId(Connection con, int eventId) throws SQLException {
         String selectAllEvents = "SELECT * FROM events WHERE id=?;";
         PreparedStatement selectAllEventsStmt = con.prepareStatement(selectAllEvents);
@@ -212,6 +194,13 @@ public class JDBCEvent {
         return -1;
     }
 
+    /**
+     * Retrieve event id given session id
+     * @param con
+     * @param sessionId
+     * @return
+     * @throws SQLException
+     */
     public static ArrayList<Integer> getEventIdsGivenSession(Connection con, String sessionId) throws SQLException {
         String selectAllEventId = "SELECT * FROM user_to_event WHERE user_id=(SELECT user_id FROM users WHERE email=(SELECT email FROM sessions WHERE session_id=?));";
         PreparedStatement selectAllEventIdStmt = con.prepareStatement(selectAllEventId);
@@ -222,17 +211,6 @@ public class JDBCEvent {
             eventIds.add(results.getInt("event_id"));
         }
         return eventIds;
-    }
-
-    public static int getEventIdGivenUserId(Connection con, int userId) throws SQLException {
-        String selectEventId = "SELECT event_id FROM user_to_event WHERE user_id=?;";
-        PreparedStatement selectEventIdStmt = con.prepareStatement(selectEventId);
-        selectEventIdStmt.setInt(1, userId);
-        ResultSet result = selectEventIdStmt.executeQuery();
-        if (result.next()) {
-            return result.getInt("event_id");
-        }
-        return -1;
     }
 
     /**

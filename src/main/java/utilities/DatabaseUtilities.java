@@ -1,11 +1,13 @@
 package utilities;
 
 import com.google.gson.Gson;
-import utilities.DatabaseConfig;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+/**
+ * A class to read in the database configuration Json file
+ */
 public class DatabaseUtilities {
     public static final String configFileName = "database.json";
 

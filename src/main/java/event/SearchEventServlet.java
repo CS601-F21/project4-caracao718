@@ -14,20 +14,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Handle requests to /search
+ * To filter events by the input
+ */
 public class SearchEventServlet extends HttpServlet {
     private int eventsPerPage = 5;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String sessionId = req.getSession(false).getId();
-//        String[] requestURI = req.getQueryString().split("=", 2);
-//        System.out.println(requestURI.toString());
-//        int currPage = Integer.parseInt(requestURI[1]);
 
-        // display the search area text boxes : title, description, location, date
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.SEARCH_EVENT_FORM);
+        resp.getWriter().println(EventConstants.SEARCH_EVENT_FORM);
 
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class SearchEventServlet extends HttpServlet {
         ResultSet pageResults = searchPage(title, description, date, location, currPage * eventsPerPage);
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         // if there's any pageResults in the ResultSet, display them
         boolean displayPageNumber = false;
         try {
@@ -77,7 +76,7 @@ public class SearchEventServlet extends HttpServlet {
         }
         resp.getWriter().println("<p><a href=\"/search\">Another Search</a>");
         resp.getWriter().println("<p><a href=\"/login\">My Home Page</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
     /**

@@ -13,10 +13,13 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Handle requests to /my-detail-event
+ * To modify the event created by user
+ */
 public class ModifyDetailEventServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String sessionId = req.getSession(false).getId();
 
         String[] requestURI = req.getQueryString().split("=", 2);
         int eventId = Integer.parseInt(requestURI[1]);
@@ -36,7 +39,7 @@ public class ModifyDetailEventServlet extends HttpServlet {
 
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         try {
             if (event.next()) {
                 resp.getWriter().println("<h2> Please fill out all the information in the form below to modify the event.</h2>\n");
@@ -79,7 +82,7 @@ public class ModifyDetailEventServlet extends HttpServlet {
         // link to purchase ticket servlet
         resp.getWriter().println();
         resp.getWriter().println("<p><a href=\"/login\">Back to Home Page</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
     @Override
@@ -118,7 +121,7 @@ public class ModifyDetailEventServlet extends HttpServlet {
 
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         try {
             if (event.next()) {
                 resp.getWriter().print("<h2> " + event.getString("title") + " </h2>");
@@ -135,6 +138,6 @@ public class ModifyDetailEventServlet extends HttpServlet {
 
         resp.getWriter().println();
         resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 }

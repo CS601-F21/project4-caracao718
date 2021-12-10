@@ -8,16 +8,17 @@ import org.eclipse.jetty.http.HttpStatus;
 import utilities.DBCPDataSource;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
+/**
+ * Handle request to /event-detail
+ * To display details of a specific event
+ */
 public class EventsDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String sessionId = req.getSession(false).getId();
 
         String[] requestURI = req.getQueryString().split("=", 2);
         int eventId = Integer.parseInt(requestURI[1]);
@@ -32,7 +33,7 @@ public class EventsDetailServlet extends HttpServlet {
         }
 
         resp.setStatus(HttpStatus.OK_200);
-        resp.getWriter().println(CreateEventConstants.PAGE_HEADER);
+        resp.getWriter().println(EventConstants.PAGE_HEADER);
         try {
             if (event.next()) {
                 resp.getWriter().print("<h2> " + event.getString("title") + " </h2>");
@@ -41,9 +42,7 @@ public class EventsDetailServlet extends HttpServlet {
                 resp.getWriter().print("<h3> The date of the event: " + event.getDate("event_date") + " </h3>");
                 resp.getWriter().print("<h3> Tickets available: " + event.getInt("tickets_avaiable") + " </h3>");
                 resp.getWriter().print("<h3> Price per ticket: " + event.getDouble("price") + " </h3>");
-
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +51,7 @@ public class EventsDetailServlet extends HttpServlet {
         resp.getWriter().println("<p><a href=\"/purchase?event_id=" + eventId + "\">Buy Ticket(s)</a>");
         resp.getWriter().println();
         resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
-        resp.getWriter().println(CreateEventConstants.PAGE_FOOTER);
+        resp.getWriter().println(EventConstants.PAGE_FOOTER);
     }
 
 }
