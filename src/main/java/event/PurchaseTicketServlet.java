@@ -46,7 +46,7 @@ public class PurchaseTicketServlet extends HttpServlet {
                 ticketsAvailable = event.getInt("tickets_avaiable");
                 if (ticketsAvailable <= 0) {
                     resp.getWriter().println("<h2> Sorry, no more tickets </h2>");
-                    resp.getWriter().println("<p><a href=\"/events\">Back to Events</a>");
+                    resp.getWriter().println("<p><a href=\"/events?page=0&total=1\">Back to Events</a>");
                     resp.getWriter().println(EventConstants.PAGE_FOOTER);
                     return;
                 }
