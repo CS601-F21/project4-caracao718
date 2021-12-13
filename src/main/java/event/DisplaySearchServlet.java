@@ -91,57 +91,31 @@ public class DisplaySearchServlet extends HttpServlet {
             if  (title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // only search for date
                 resultSet = JDBCSearchIndividual.getAllEventsGivenDate(con, date);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
             } else if (!title.isEmpty() && !description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // search for title, description, and date
                 resultSet = JDBCSearchMulti.getAllEventsGivenTitleDescriptionDate(con, title, description, date);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
             } else if (!title.isEmpty() && !description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
                 // search for all
                 resultSet = JDBCSearchMulti.getAllEventsGivenTitleDescriptionDateLocation(con, title, description, date, location);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
             } else if (title.isEmpty() && !description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
                 // search for description, date, and location
                 resultSet = JDBCSearchMulti.getAllEventsGivenDescriptionDateLocation(con, description, date, location);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
             } else if (title.isEmpty() && description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
                 // search for date, location
                 resultSet = JDBCSearchMulti.getAllEventsGivenDateLocation(con, date, location);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
             } else if (!title.isEmpty() && description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // search for title and date
                 resultSet = JDBCSearchMulti.getAllEventsGivenTitleDate(con, title, date);
-                while (resultSet.next()) {
-                    result++;
-                }
-                return result;
             } else if (title.isEmpty() && !description.isEmpty() && date != null && Objects.equals(location, "empty")) {
                 // search for description and date
                 resultSet = JDBCSearchMulti.getAllEventsGivenDescriptionDate(con, description, date);
-                while (resultSet.next()) {
-                    result++;
-                }
             } else if (!title.isEmpty() && description.isEmpty() && date != null && !Objects.equals(location, "empty")) {
                 resultSet = JDBCSearchMulti.getAllEventsGivenTitleLocationDate(con, title, location, date);
-                while (resultSet.next()) {
-                    result++;
-                }
             }
+            while (resultSet.next()) {
+                result++;
+            }
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         }
